@@ -1,0 +1,22 @@
+{
+  "templateId": "next-salon-studio",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "fullPage": false,
+  "captures": [
+    {
+      "mode": "light",
+      "sha256": "90ec3381c2aadfff243154d6f6ad0c3e753b26780fd403eba53708106c43297d",
+      "file": "jamstacks/home-light.jpg",
+      "bytes": 121354
+    },
+    {
+      "mode": "dark",
+      "sha256": "496feae708720ea3762e8876c52d4721f4a427284c36fa2eed3821e4f5df54c0",
+      "file": "jamstacks/home-dark.jpg",
+      "bytes": 127911
+    }
+  ]
+}

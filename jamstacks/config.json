@@ -1,0 +1,19 @@
+{
+  "name": "Atelier Blush Hair Studio",
+  "description": "Editorial hair salon with fashion-magazine type and blush accents, a cut/colour/styling price list by stylist level and a lookbook.",
+  "tech": "next",
+  "type": "salon",
+  "style": "studio",
+  "internal": false,
+  "components": [
+    "support-form"
+  ],
+  "configFile": "site.config.json",
+  "screenshots": {
+    "light": "jamstacks/home-light.jpg",
+    "dark": "jamstacks/home-dark.jpg",
+    "theme": {
+      "strategy": "media"
+    }
+  }
+}

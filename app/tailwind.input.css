@@ -1,112 +1,796 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================================
+   Atelier Blush Hair Studio — "Cover Story" Editorial Design Tokens
+   Light edition: soft blush paper stock with deep ink & rose-crimson accents.
+   Evening edition (dark): aubergine-black stock, blush-pink italics, foil gold.
+   ============================================================================ */
+
 :root {
-  --bg: #f7f8fa;
-  --surface: #ffffff;
-  --text: #172033;
-  --muted: #526078;
-  --accent: #2457a7;
-  --accent-ink: #2457a7;
-  --on-accent: #ffffff;
-  --line: #c7cfdb;
-  --focus: #2457a7;
-  --map-filter: none;
+  --paper: #FAF4F1;
+  --paper-blush: #F6E3E1;
+  --surface: #FFFBF9;
+  --ink: #1C1517;
+  --ink-muted: #6E5A60;
+  --blush: #F3CFD3;
+  --blush-ink: #A12F55;
+  --primary: #A12F55;
+  --primary-hover: #8E2A4C;
+  --on-primary: #FFFFFF;
+  --rule: #E2CFCF;
+  --gold-foil: #9A7A4A;
+  --focus: #A12F55;
+  --headline-italic: #1C1517;
+  --art-face: #FAF4F1;
+
+  /* Editorial texture & illustration layers */
+  --halftone-dot: rgba(161, 47, 85, 0.14);
+  --grain-opacity: 0.04;
+  --art-offset: rgba(243, 207, 211, 0.78);
+  --art-highlight: rgba(255, 251, 249, 0.65);
+  --map-filter: sepia(0.14) saturate(0.82) contrast(0.96);
+
+  /* Signature hair-colour swatches (light edition) */
+  --swatch-rose: #D9939B;
+  --swatch-copper: #C1623B;
+  --swatch-honey: #CFA059;
+  --swatch-butter: #E3CCA2;
+  --swatch-ash: #948F8D;
+  --swatch-espresso: #3E2925;
+
   color-scheme: light;
 }
+
 @media (prefers-color-scheme: dark) {
- :root:not(.light) {
-  --bg: #141923;
-  --surface: #1e2633;
-  --text: #f1f5fa;
-  --muted: #b5c2d5;
-  --accent: #2457a7;
-  --accent-ink: #a9cbff;
-  --on-accent: #ffffff;
-  --line: #61708a;
-  --focus: #a9cbff;
-  --map-filter: grayscale(.4) brightness(.8);
-  color-scheme: dark;
- }
+  :root:not(.light) {
+    --paper: #171012;
+    --paper-blush: #24171B;
+    --surface: #1F1619;
+    --ink: #F6E9EA;
+    --ink-muted: #BBA4AA;
+    --blush: #5A2E3A;
+    --blush-ink: #E9A9B4;
+    --primary: #B8436C;
+    --primary-hover: #A83A61;
+    --on-primary: #FFFFFF;
+    --rule: #3A2A2F;
+    --gold-foil: #C9A66B;
+    --focus: #E9A9B4;
+    --headline-italic: #E9A9B4;
+    --art-face: #2A1C21;
+
+    --halftone-dot: rgba(233, 169, 180, 0.14);
+    --grain-opacity: 0.055;
+    --art-offset: rgba(90, 46, 58, 0.85);
+    --art-highlight: rgba(246, 233, 234, 0.25);
+    --map-filter: invert(0.9) hue-rotate(175deg) saturate(0.55) brightness(0.84) contrast(0.96);
+
+    --swatch-rose: #C97B86;
+    --swatch-copper: #D4734C;
+    --swatch-honey: #D8AD6B;
+    --swatch-butter: #D5BD8E;
+    --swatch-ash: #A5A09E;
+    --swatch-espresso: #63443E;
+
+    color-scheme: dark;
+  }
 }
+
 :root.dark {
-  --bg: #141923;
-  --surface: #1e2633;
-  --text: #f1f5fa;
-  --muted: #b5c2d5;
-  --accent: #2457a7;
-  --accent-ink: #a9cbff;
-  --on-accent: #ffffff;
-  --line: #61708a;
-  --focus: #a9cbff;
-  --map-filter: grayscale(.4) brightness(.8);
+  --paper: #171012;
+  --paper-blush: #24171B;
+  --surface: #1F1619;
+  --ink: #F6E9EA;
+  --ink-muted: #BBA4AA;
+  --blush: #5A2E3A;
+  --blush-ink: #E9A9B4;
+  --primary: #B8436C;
+  --primary-hover: #A83A61;
+  --on-primary: #FFFFFF;
+  --rule: #3A2A2F;
+  --gold-foil: #C9A66B;
+  --focus: #E9A9B4;
+  --headline-italic: #E9A9B4;
+  --art-face: #2A1C21;
+
+  --halftone-dot: rgba(233, 169, 180, 0.14);
+  --grain-opacity: 0.055;
+  --art-offset: rgba(90, 46, 58, 0.85);
+  --art-highlight: rgba(246, 233, 234, 0.25);
+  --map-filter: invert(0.9) hue-rotate(175deg) saturate(0.55) brightness(0.84) contrast(0.96);
+
+  --swatch-rose: #C97B86;
+  --swatch-copper: #D4734C;
+  --swatch-honey: #D8AD6B;
+  --swatch-butter: #D5BD8E;
+  --swatch-ash: #A5A09E;
+  --swatch-espresso: #63443E;
+
   color-scheme: dark;
 }
 
 @theme {
   --color-*: initial;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --radius-ui: .375rem;
+  --font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Epilogue Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --radius-ui: 0.125rem;
 }
+
 @theme inline {
-  --color-bg: var(--bg);
+  --color-paper: var(--paper);
+  --color-paper-blush: var(--paper-blush);
   --color-surface: var(--surface);
-  --color-ink: var(--text);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
-  --color-on-accent: var(--on-accent);
-  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-blush: var(--blush);
+  --color-blush-ink: var(--blush-ink);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-rule: var(--rule);
+  --color-gold: var(--gold-foil);
+  --color-focus: var(--focus);
+  --color-headline-italic: var(--headline-italic);
 }
+
+/* Jamstacks hosted support form & dark-mode toggle integration */
 :root {
   --measure: 42rem;
   --jamstacks-font-family: var(--font-sans);
-  --jamstacks-color-text: var(--text);
+  --jamstacks-color-text: var(--ink);
   --jamstacks-color-background: var(--surface);
-  --jamstacks-color-primary: var(--accent);
-  --jamstacks-color-border: var(--line);
-  --jamstacks-color-muted: var(--muted);
-  --jamstacks-color-link: var(--accent-ink);
+  --jamstacks-color-primary: var(--primary);
+  --jamstacks-color-border: var(--rule);
+  --jamstacks-color-muted: var(--ink-muted);
+  --jamstacks-color-link: var(--blush-ink);
   --jamstacks-border-radius: var(--radius-ui);
   --jamstacks-control-height: 2.75rem;
   --jamstacks-spacing: 1rem;
   --jamstacks-form-max-width: 40rem;
-  --jamstacks-toggle-color: var(--text);
-  --jamstacks-toggle-dark-color: var(--text);
-  --jamstacks-toggle-border: var(--line);
+  --jamstacks-toggle-color: var(--ink);
+  --jamstacks-toggle-dark-color: var(--ink);
+  --jamstacks-toggle-border: var(--rule);
   --jamstacks-toggle-background: var(--surface);
   --jamstacks-toggle-dark-background: var(--surface);
   --jamstacks-toggle-focus-color: var(--focus);
 }
+
 @layer base {
-  html { background: var(--bg); color: var(--text); font-family: var(--font-sans); scroll-padding-top: 1.5rem; }
-  body { margin: 0; line-height: 1.6; }
-  main { min-height: 65vh; }
-  a { text-underline-offset: .2em; }
-  a:hover { text-decoration: underline; }
-  button { cursor: pointer; }
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-  [aria-current="page"] { text-decoration: underline; }
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    scroll-padding-top: 6rem;
+    accent-color: var(--primary);
+  }
+
+  body {
+    margin: 0;
+    line-height: 1.65;
+    position: relative;
+    overflow-x: clip;
+  }
+
+  /* Subtle printed-paper grain across every page (feTurbulence SVG data URI) */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+  }
+
+  main {
+    min-height: 65vh;
+    position: relative;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+  }
+
+  a {
+    text-underline-offset: 0.24em;
+    text-decoration-thickness: 1px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--blush);
+    color: var(--ink);
+  }
 }
-@utility wrap { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+
+@utility wrap {
+  width: min(100% - 2rem, 80rem);
+  margin-inline: auto;
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility font-sans {
+  font-family: var(--font-sans);
+}
+
 @layer components {
-  .button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: .6rem 1.2rem; border: 1px solid var(--accent); border-radius: var(--radius-ui); background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none; }
-  .button:hover { text-decoration: underline; }
-  .button-quiet { background: var(--surface); color: var(--accent-ink); border-color: var(--line); }
-  .text-link { color: var(--accent-ink); text-decoration: underline; }
-  .eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .skip-link { position: absolute; left: 1rem; top: -8rem; padding: .75rem; z-index: 200; background: var(--surface); }
-  .skip-link:focus { top: 1rem; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.7rem 1.45rem;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-ui);
+    background: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+
+  .button:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    text-decoration: none;
+  }
+
+  .button:active {
+    transform: translateY(1px);
+  }
+
+  .button-quiet {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .button-quiet:hover {
+    background: var(--paper-blush);
+    border-color: var(--blush-ink);
+    color: var(--blush-ink);
+  }
+
+  .text-link {
+    color: var(--blush-ink);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--blush-ink) 55%, transparent);
+    transition: text-decoration-color 180ms ease;
+  }
+
+  .text-link:hover {
+    text-decoration-color: var(--blush-ink);
+  }
+
+  /* Editorial link with left-to-right hairline draw */
+  .editorial-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  .editorial-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -2px;
+    border-block-end: 1.5px solid currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .editorial-link:hover::after,
+  .editorial-link:focus-visible::after,
+  .editorial-link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .dept-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .folio {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-foil);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cover-portrait {
+    background-image: var(--cover-portrait-light);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .cover-portrait {
+      background-image: var(--cover-portrait-dark);
+    }
+  }
+
+  :root.dark .cover-portrait {
+    background-image: var(--cover-portrait-dark);
+  }
+
+  /* Lookbook photographs: blush-backdrop shot in light mode, plum-backdrop shot in dark mode */
+  .look-photo-dark {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .look-photo-light {
+      display: none;
+    }
+
+    :root:not(.light) .look-photo-dark {
+      display: block;
+    }
+  }
+
+  :root.dark .look-photo-light {
+    display: none;
+  }
+
+  :root.dark .look-photo-dark {
+    display: block;
+  }
+
+  /* Blush halftone dot screen band */
+  .halftone-band {
+    background-color: var(--paper-blush);
+    background-image: radial-gradient(circle, var(--halftone-dot) 1.15px, transparent 1.25px);
+    background-size: 11px 11px;
+  }
+
+  /* Magazine drop cap for stand-first paragraphs & editor's letter */
+  .editorial-dropcap::first-letter {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    float: left;
+    font-size: 3.35rem;
+    line-height: 0.78;
+    padding-right: 0.55rem;
+    padding-top: 0.2rem;
+    color: var(--blush-ink);
+  }
+
+  /* Dotted contents leader */
+  .contents-leader {
+    flex: 1 1 auto;
+    min-width: 1.5rem;
+    border-bottom: 1.5px dotted var(--rule);
+    margin-bottom: 0.35rem;
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -8rem;
+    padding: 0.75rem 1.25rem;
+    z-index: 200;
+    background: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Magazine segmented tabs & level picker (border-based active indicator for Forced Colors Mode) */
+  .mag-tab {
+    position: relative;
+    padding: 0.6rem 0.65rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 0;
+    white-space: nowrap;
+    transition: color 160ms ease;
+  }
+
+  @media (min-width: 40rem) {
+    .mag-tab {
+      padding: 0.65rem 0.95rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.15em;
+    }
+  }
+
+  .mag-tab:hover {
+    color: var(--ink);
+  }
+
+  .mag-tab[aria-selected='true'],
+  .mag-tab[aria-pressed='true'] {
+    color: var(--blush-ink);
+  }
+
+  .mag-tab[aria-selected='true']::after,
+  .mag-tab[aria-pressed='true']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0.35rem;
+    inset-block-end: 0;
+    border-block-end: 2.5px solid var(--blush-ink);
+  }
+
+  /* Contact panel folded blush corner */
+  .corner-fold-panel {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .corner-fold-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(225deg, var(--paper) 49%, var(--rule) 49%, var(--rule) 51%, var(--blush) 51%);
+    pointer-events: none;
+  }
 }
-.map iframe { width: 100%; min-height: 20rem; border: 0; filter: var(--map-filter); }
-.enquiry__host { display: block; }
-.enquiry__status { margin-top: 1rem; color: var(--muted); }
-.enquiry[data-state="present"] > .enquiry__status { display: none; }
+
+/* ============================================================================
+   Signature Swatch Fan Animation & Interactive Lift
+   ============================================================================ */
+@keyframes swatch-fan-open {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(var(--swatch-angle, 0deg));
+  }
+}
+
+.swatch-weft {
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+  transform: rotate(var(--swatch-angle, 0deg));
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 220ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .swatch-weft {
+    animation: swatch-fan-open 720ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: var(--swatch-delay, 0ms);
+  }
+}
+
+.swatch-weft[data-active='true'] {
+  transform: rotate(var(--swatch-angle, 0deg)) translateY(-16px) scale(1.04);
+  filter: drop-shadow(0 8px 14px rgba(28, 21, 23, 0.18));
+}
+
+/* ============================================================================
+   Scroll-Driven Editorial Rise-In (Progressive Enhancement, Decorative Only)
+   Animates transform only so below-the-fold sections remain full-contrast.
+   ============================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes editorial-rise {
+      from {
+        transform: translateY(16px);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .reveal-on-scroll {
+      animation: editorial-rise auto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 24%;
+    }
+  }
+}
+
+/* ============================================================================
+   Responsive Magazine Price Tables (@container query, zero horizontal scroll)
+   ============================================================================ */
+.price-table-container {
+  container-type: inline-size;
+  max-inline-size: 100%;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.price-table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+  background: var(--price-head-bg, var(--paper));
+  border-block-start: 1.5px solid var(--ink);
+  border-block-end: 1px solid var(--rule);
+  padding: 0.85rem 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: right;
+  vertical-align: bottom;
+}
+
+.price-table thead th:first-child {
+  text-align: left;
+  padding-inline-start: 0;
+}
+
+.price-table thead th[data-highlighted='true'] {
+  color: var(--blush-ink);
+  background: color-mix(in srgb, var(--blush) 38%, var(--price-head-bg, var(--paper)));
+  border-block-end: 2px solid var(--blush-ink);
+}
+
+.price-table tbody tr {
+  scroll-margin-top: 6rem;
+  transition: background-color 150ms ease;
+}
+
+.price-table tbody tr:target {
+  background: color-mix(in srgb, var(--blush) 32%, transparent);
+}
+
+.price-table tbody tr:hover,
+.price-table tbody tr:focus-within {
+  background: color-mix(in srgb, var(--blush) 20%, transparent);
+}
+
+.price-table tbody th,
+.price-table tbody td {
+  border-block-end: 1px solid var(--rule);
+  padding: 1.05rem 0.65rem;
+  vertical-align: top;
+}
+
+.price-table tbody th {
+  text-align: left;
+  padding-inline-start: 0;
+  font-weight: 400;
+}
+
+.price-table tbody td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.price-table tbody td[data-highlighted='true'] {
+  background: color-mix(in srgb, var(--blush) 26%, transparent);
+  color: var(--blush-ink);
+  font-weight: 600;
+}
+
+/* Mobile stacked layout: zero horizontal scroll from 360px up */
+@container (width < 42rem) {
+  .price-table,
+  .price-table tbody,
+  .price-table tr,
+  .price-table tbody th,
+  .price-table tbody td {
+    display: block;
+    width: 100%;
+  }
+
+  .price-table thead {
+    display: none;
+  }
+
+  .price-table tbody tr {
+    border-block-start: 1px solid var(--rule);
+    padding-block: 1rem 0.75rem;
+  }
+
+  .price-table tbody tr:first-child {
+    border-block-start: 1.5px solid var(--ink);
+  }
+
+  .price-table tbody th {
+    border-block-end: 0;
+    padding: 0 0 0.65rem 0;
+  }
+
+  .price-table tbody td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.42rem 0.4rem;
+    border-block-end: 1px dotted var(--rule);
+    text-align: right;
+    white-space: normal;
+  }
+
+  .price-table tbody td:last-child {
+    border-block-end: 0;
+  }
+
+  .price-table tbody td::before {
+    content: attr(data-level-label);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: left;
+  }
+
+  .price-table tbody td[data-highlighted='true']::before {
+    color: var(--blush-ink);
+  }
+
+  .price-table tbody td[data-mobile-hidden='true'] {
+    display: none;
+  }
+
+  .price-table tbody td.price-table-expand-cell {
+    display: block;
+    border-block-end: 0;
+    padding: 0.5rem 0 0;
+    text-align: left;
+  }
+
+  .price-table tbody td.price-table-expand-cell::before {
+    content: none;
+  }
+}
+
+/* ============================================================================
+   Mobile Header Disclosure Menu (<details>, works cleanly without JS)
+   ============================================================================ */
+.mobile-nav-details > summary {
+  list-style: none;
+}
+
+.mobile-nav-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ============================================================================
+   Inherited Map & Hosted Jamstacks Support Form Styles
+   ============================================================================ */
+.map iframe {
+  width: 100%;
+  min-height: 20rem;
+  border: 0;
+  display: block;
+  filter: var(--map-filter);
+}
+
+.enquiry__host {
+  display: block;
+}
+
+.enquiry__status {
+  margin-top: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.enquiry[data-state='present'] > .enquiry__status {
+  display: none;
+}
+
+/* ============================================================================
+   Reduced Motion & Forced Colors
+   ============================================================================ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
+
+/* ============================================================================
+   Print Stylesheet — Crisp Black-on-White Masthead & Price Tables
+   ============================================================================ */
+.print-only-footer {
+  display: none;
+}
+
 @media print {
-  nav, .skip-link, .enquiry, button { display: none !important; }
-  html { background: white; color: black; }
-  a { color: inherit; }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  header nav,
+  header .mobile-nav-details,
+  header .no-print,
+  footer,
+  .skip-link,
+  .enquiry,
+  .no-print,
+  .swatch-fan-wrap,
+  button {
+    display: none !important;
+  }
+
+  .halftone-band {
+    background: #ffffff !important;
+    background-image: none !important;
+  }
+
+  * {
+    color: #000000 !important;
+    border-color: #333333 !important;
+    box-shadow: none !important;
+  }
+
+  .price-table thead th {
+    position: static !important;
+    background: #ffffff !important;
+  }
+
+  .price-table tbody tr {
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  .print-only-footer {
+    display: block !important;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #000000;
+    font-size: 0.85rem;
+  }
 }

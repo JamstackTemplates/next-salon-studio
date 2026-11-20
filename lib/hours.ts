@@ -45,3 +45,14 @@ export function openingLabel(hours: readonly OpeningHours[], timeZone: string, n
   }
   return 'Closed · see opening hours';
 }
+
+/** Browser-only helper returning the current weekday in the business time zone, or null when invalid. */
+export function currentDayInZone(timeZone: string, now = new Date()): Day | null {
+  if (!timeZone) return null;
+  try {
+    const weekday = new Intl.DateTimeFormat('en-US', { timeZone, weekday: 'long' }).format(now);
+    return DAYS.includes(weekday as Day) ? (weekday as Day) : null;
+  } catch {
+    return null;
+  }
+}

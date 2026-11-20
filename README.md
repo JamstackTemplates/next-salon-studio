@@ -1,112 +1,115 @@
-# JamstackTemplates Next.js starter
+# Atelier Blush Hair Studio (`next-salon-studio`)
 
-The shared starter for Next.js templates in the `JamstackTemplates` organization. Its canonical home is
-`JamstackTemplates/template-next`, alongside the templates generated from it.
-It is not a gallery design or a published demo. Business content is sample content. No application code
-in a website created from this template depends on the starter checkout or the portal repository.
+An editorial hair salon website built as a static Next.js export for the Jamstacks gallery. Styled
+as a fashion magazine issue printed on soft blush paper (with an aubergine-and-blush "evening
+edition" dark mode), it features a cut/colour/styling price list by stylist level, a seasonal
+lookbook with computed totals, a studio masthead and map page, and an enquiry-first Contact page.
 
-## Build your website
+Every person, price, address detail and contact address in this sample is fictitious. Replace them
+with your real salon details before launching.
 
-Start in the checkout of the repository GitHub created from `JamstackTemplates/template-next`. All
-starter files are already present. Local development requires Node 24 or later and npm.
+## Local preview
 
-To build a new site, fill in `plan/PLAN.md`, then tell the coding agent **`Implement plan/PLAN.md`**.
-In Claude Code, `/write-plan <business description>` drafts the brief for you. For a gallery template,
-pass the table row: `/write-plan next-type-style | Business | Description | Form purpose`.
-After reviewing the finished site, run `/cleanup-plan` or delete `plan/` and `.claude/skills/` by hand
-to remove all initial build instructions.
+Local development requires Node 24 or later and npm:
 
-To preview locally, run `npm ci` and `npm run dev` from the repository root.
+```sh
+npm ci
+npm run dev
+```
+
+To build and serve the static export locally:
+
+```sh
+npm run check
+npm start
+```
 
 ## Pages
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Minimal content-driven home page and Organization JSON-LD |
-| `/contact/` | Hosted support form when configured; visible email alternative |
-| `/404.html` | Friendly static error page |
+| `/` | Cover hero with masthead and cover portrait, "In this issue" contents, 4-level price ladder, lookbook preview, pull quote, visit strip and `HairSalon` JSON-LD |
+| `/prices/` | Full Cut & finish, Colour (with interactive swatch fan & patch-test Editor's note) and Styling price tables across four stylist levels, plus progressive-enhancement level picker (`#level=senior`) |
+| `/lookbook/` | AW26 Lookbook with eight editorial photographs (light & dark versions), category filter tabs, stylist credits, service links and computed "from" totals |
+| `/studio/` | Team masthead credits grouped by stylist level, five-step visit expectations, weekly opening hours (`Europe/London`), drawn Seven Dials map vignette, Google Map embed and accessibility notes |
+| `/contact/` | Appointment enquiry letters page: hosted Jamstacks support form when configured, visible email/phone desk column in every state |
+| `/404.html` | Themed "Erratum" static error page |
 
-## Make it yours
+## Make it yours (file ownership & common edits)
 
 | File | Owns |
 | --- | --- |
-| `content/business.ts` | Shared business name, contact details and starter sample copy |
-| `app/page.tsx`, `app/<route>/page.tsx` | Page composition and editable copy such as headings and calls to action |
-| `content/menu.ts` or `content/services.ts` (add when needed) | Industry-specific typed collections |
-| `site.config.json` | Public name, description, hostname, optional timeZone and Jamstacks integration |
-| `app/tailwind.input.css` | Theme tokens, utility mappings and small shared styles |
-| `components/site-header.tsx`, `site-footer.tsx` | Replaceable navigation and visual shell |
-| `lib/structured-data.ts` | Schema type/properties derived from real content |
-| `app/sitemap.ts` | Public routes; update when adding a page |
+| `content/business.ts` | Studio name, masthead, issue line, email, phone, address, directions, accessibility note, weekly `hours` (`Europe/London`) and Contact guidance |
+| `content/levels.ts` | The four stylist levels (`graduate`, `stylist`, `senior`, `art-director`) and descriptions |
+| `content/services.ts` | All 17 Cut, Colour and Styling services, prices per level, durations, `from` flags, `patchTest` flags and `available` toggles |
+| `content/stylists.ts` | The six stylists, their current `levelId`, specialisms, quotes, cameo portrait keys and `bookable` status |
+| `content/lookbook.ts` | Seasonal looks referencing stylist IDs, service IDs and swatch IDs; indicative "from" totals are always computed from `content/services.ts` |
+| `content/swatches.ts` | The six signature hair-colour swatches (light & dark hex values) used in the swatch fan and lookbook tabs |
+| `content/validate.ts` | Item- and field-specific content integrity validators exercised by `tests/content.test.ts` |
+| `app/page.tsx`, `app/prices/page.tsx`, `app/lookbook/page.tsx`, `app/studio/page.tsx`, `app/contact/page.tsx`, `app/not-found.tsx` | Page-specific editable headings, stand-first copy, notes and calls to action |
+| `components/art/` | Inline SVG fashion illustrations (swatch fan, 6 cameo portraits, motifs, dividers, icons, Seven Dials map vignette, 404 erratum) |
+| `app/tailwind.input.css` | Light and dark palette tokens, editorial textures (paper grain & halftone screens), responsive `@container` price table styles, motion and print stylesheet |
+| `site.config.json` | Public site name, meta description, domain, `timeZone` (`Europe/London`) and Jamstacks integration (`siteId`, `cdnUrl`) |
+| `lib/structured-data.ts` | `HairSalon` JSON-LD derived from `content/business.ts` |
+| `app/sitemap.ts` | Static sitemap listing all public routes |
 
-Edit page copy in the route file, for example `<Hero.Heading>Seasonal flowers</Hero.Heading>`
-in `app/page.tsx` for the Home page. The backing
-component owns the styling and interactions. Use typed fields for data the site needs to look up or
-reuse. For example, change `business.email` to update Contact. Rename in `business.name` and
-`site.config.json.name`. Add a typed core-content file for frequent owner edits: a food menu should use
-the existing sections/items/price/availability model; changes such as sold out, seasonal or a new section
-should be data edits with actionable content tests. Do not add business content to configuration: the
-Jamstacks provisioner replaces that file wholesale, possibly adding `provisioningId`.
+### Frequent owner edits
 
-## Appearance and optional local-business features
+- **Update a service price:** edit the `prices` record in `content/services.ts` (whole GBP in `1–500`, or `null` when a level does not offer the service; prices must not decrease across levels). Updating `balayage` automatically updates the `/prices/` table, the Home cover line (`Balayage from £…`) and the `rose-gold-melt` and `buttercream-balayage` lookbook totals.
+- **Hide a service temporarily:** set `available: false` on a service in `content/services.ts` (note: remove it from any lookbook entry's `serviceIds` first if referenced).
+- **Promote a stylist:** change their `levelId` in `content/stylists.ts`; their Masthead group and lookbook totals update automatically.
+- **Pause new clients for a stylist:** set `bookable: false` on that stylist in `content/stylists.ts`.
+- **Add or retire a lookbook look:** edit `content/lookbook.ts` and run `npm test` to validate all service, stylist and swatch references.
+- **Replace a look's photograph:** each look needs two matching portrait images (670×754, about 8:9) in `public/looks/`, named after the look's `id`: `<id>-light.webp` on the blush backdrop and `<id>-dark.webp` on the plum backdrop. The site shows the one for the active theme, and `npm test` fails if a look is missing either file or a file has no matching look.
+- **Edit page copy:** edit headings, stand-first paragraphs, small print and CTAs directly inside the route's `app/**/page.tsx` file.
+- **Replace the homepage portrait:** update `public/salon-light.webp` and `public/salon-dark.webp` with matching square images. The site uses the portrait for the active theme.
+- **Rename the salon:** update `business.name` / `business.masthead` in `content/business.ts` and `name` in `site.config.json`. Never add business data to `site.config.json` (the Jamstacks provisioner replaces that file wholesale).
 
-The starter uses system fonts, neutral Tailwind v4 tokens and the published `jamstacks` package's
-ThemeProvider, ThemeScript and DarkModeToggle. No font download or font licence file is needed for
-system fonts. Each designed template chooses and documents self-hosted font packages and their licences.
-Utilities live in components; colours originate in CSS tokens with light, automatic-dark and explicit-dark
-values plus `@theme inline` mappings. Keep the hosted form's primary fill dark enough for white text.
-Keyboard focus, reduced motion and print styles are included. The footer credit is yours to keep,
-reword or remove.
+## Typography, themes & licences
 
-For a business with visiting hours, add address/directions/hours to typed content, set the IANA `timeZone`
-in site.config.json and use optional `GoogleMap`, `TimeZoneNote` and `OpenBadge` components. GoogleMap
-accepts an address and descriptive title; map helpers need no key. `OpenBadge` accepts seven
-`OpeningHours` records, uses the business zone and refreshes each minute in the browser; static/no-JS
-output is neutral. Same-day intervals only: overnight hours fail validation and need a tested extension
-before use. The baseline home page does not load a map or assert opening hours.
+Self-hosted variable fonts installed through npm (no external font CDN requests):
+
+- **Display:** `@fontsource-variable/playfair-display` (roman & italic) — SIL Open Font License 1.1 (OFL)
+- **Body & UI:** `@fontsource-variable/epilogue` (roman & italic) — SIL Open Font License 1.1 (OFL)
+
+Light and dark ("evening edition") tokens are defined in `app/tailwind.input.css` across `:root`,
+`@media (prefers-color-scheme: dark)` and `:root.dark`, integrated with `jamstacks`' `ThemeProvider`,
+`ThemeScript` and `DarkModeToggle`. Reduced motion disables fan, reveal and underline transitions;
+the print stylesheet keeps the masthead and price tables in crisp black on white.
 
 ## Public configuration
 
 ```json
 {
-  "name": "Business name",
-  "description": "Public description",
-  "domain": "next-business-minimal.jamstacks.net",
-  "timeZone": "America/New_York",
+  "name": "Atelier Blush Hair Studio",
+  "description": "Atelier Blush is an editorial hair studio in Seven Dials, London: precision cuts, lived-in colour and occasion styling, priced clearly by stylist level.",
+  "domain": "next-salon-studio.jamstacks.net",
+  "timeZone": "Europe/London",
   "jamstacks": { "siteId": "", "cdnUrl": "https://cdn.jamstacks.net" }
 }
 ```
-
-The starter itself leaves domain/timeZone unset. Gallery templates use their folder name plus
-`.jamstacks.net`; customers replace the demo domain with their own. Do not invent canonical URLs when
-the deployed address is unknown.
 
 | Environment variable | Public build-time meaning |
 | --- | --- |
 | `JAMSTACKS_SITE` | Website ID; blank retains file default, absent ID gives email fallback |
 | `NEXT_PUBLIC_JAMSTACKS_CDN_URL` | CDN asset base; default `https://cdn.jamstacks.net` |
 | `NEXT_PUBLIC_SITE_DOMAIN` | Hostname overriding config domain |
-| `SITE_TIME_ZONE` | IANA zone overriding config timeZone |
+| `SITE_TIME_ZONE` | IANA zone overriding config `timeZone` (`Europe/London`) |
 | `PAGES_BASE_PATH` | Project path such as `/preview`; blank for custom domain/root |
 | `PAGES_BASE_URL` | Actual Pages origin and path; takes precedence for canonical URLs |
 | `JAMSTACKS_ALLOW_LOCAL_CDN` | Explicit localhost-only testing opt-in; disallowed in Actions |
 
-Copy .env.example to .env.local for Next.js local work. All listed values are public. Never add tokens,
-SMTP credentials or publishing keys. Newer dependencies should stay within reviewed majors; update
-package.json and package-lock.json together, then run the full checks.
+Copy `.env.example` to `.env.local` for local overrides. Never add tokens, SMTP credentials or
+publishing keys.
 
 ## Contact contract
 
-The real `<jamstacks-support-form>` host and one `{cdn}/sites/{siteId}/embed.js` bootstrap appear only
-on Contact when configured. Without a site ID there is no embed host/request. Email remains visible
-in either case. The hosted runtime owns name/email/message fields, validation, submission and results.
-Never register the element locally, substitute a form or intercept submission. Contact navigation uses
-full document loads via SiteLink because the runtime has no remount API. Copy must describe an enquiry,
-not a confirmed booking/order/payment; no attachments or extra input fields.
-
-For local Jamstacks development, configure an explicit local CDN URL and
-`JAMSTACKS_ALLOW_LOCAL_CDN=1`; remote builds reject localhost. A locally loaded component does not prove
-real message delivery. Test delivery separately against a configured site/backend.
+`/contact/` alone renders `<jamstacks-support-form>` and one `{cdn}/sites/{siteId}/embed.js`
+bootstrap when a public site ID is configured. Without a site ID there is no embed host or script
+request, and the email fallback appears inside the same panel frame. `hello@atelierblush.co.uk` and
+`020 7946 0381` remain visible in every state. Navigation to and from `/contact/` uses full-document
+loads via `SiteLink`. All wording describes appointment enquiries and states that an appointment is
+confirmed only when the studio replies.
 
 ## Checks and preview
 
@@ -116,51 +119,26 @@ PAGES_BASE_PATH=/preview PAGES_BASE_URL=https://owner.github.io/preview npm run 
 npm start -- --base /preview --port 3000
 ```
 
-Tests cover config/provisioner compatibility, embed state, content rules, optional opening hours,
-and structured-data escaping. Typecheck uses Next's generated route types.
-When changing the Contact integration, base paths or canonical URLs, check the exported HTML and
-sitemap. Verify both configured and unconfigured Contact with the corresponding build settings.
-Test light/dark at desktop and mobile widths, keyboard navigation, unknown routes, repeated Contact
-navigation and any added browser interactions. Return to a normal build before capturing final assets.
+`npm run check` runs unit tests (configuration, content validation, lookbook totals, `HairSalon`
+JSON-LD escaping, wording rules, `Europe/London` opening hours & UK BST transitions, and embed
+status state machine), `next typegen && tsc --noEmit`, and the static export build.
 
-## GitHub Pages deployment
+## GitHub Pages deployment & CSP
 
-`.github/workflows/pages.yml` uses npm ci, tests, typecheck and static export. It preserves Jamstacks'
-`provisioning_id` dispatch input
-and correlated run name. It builds pull requests without deploying, and publishes main/manual runs.
-Configure Pages to use GitHub Actions. GitHub ignores a CNAME file for Actions deployments, so do not
-add public/CNAME; the custom domain is a repository setting. The workflow sets it before building
-when a `PAGES_ADMIN_TOKEN` secret is available (a fine-grained token with Administration and Pages
-write access to the repository, e.g. as an organisation secret). The domain is the `SITE_DOMAIN`
-variable, else site.config.json's `domain`, else `<repo-name>.jamstacks.net` for JamstackTemplates
-repositories. Once the domain is set and its certificate is issued, a later deploy also enforces HTTPS.
-Without the secret the step only prints a notice; set the custom domain and HTTPS in Settings → Pages.
-DNS is managed separately; for template demos the CNAME targets `jamstacktemplates.github.io`.
+`.github/workflows/pages.yml` builds pull requests without deploying and publishes `main` or manual
+dispatches while preserving Jamstacks' `provisioning_id` input and correlated run name. Do not add
+`public/CNAME`. A host-level CSP must permit same-origin Next.js assets, the inline theme bootstrap,
+the configured Jamstacks CDN/form API origins when enabled, and `frame-src https://www.google.com`
+for The Studio map embed.
 
-## Content Security Policy
+## Gallery publishing assets
 
-A host-level CSP must permit same-origin Next.js scripts/assets, the inline theme bootstrap (using an
-appropriate hash/nonce policy), the configured Jamstacks CDN scripts/assets and the published form's
-API connection origin. Derive actual directives from the deployed component. Optional maps require
-`frame-src https://www.google.com`. Apply CSP at the host; static export cannot set response headers
-through a running Next.js server. Do not put private credentials into CSP or relax policies blindly.
-
-## Publishing assets and structure
-
-`app/`, `components/`, `content/`, `lib/` and `types/` are the website. `scripts/` includes static
-preview and verification, `tests/` covers customer behavior, and `.github/` supplies deployment.
-`jamstacks/` is removable gallery-only source metadata. Ordinary builds, tests and Pages work after
-it is deleted. To publish a gallery template, create [its manifest](jamstacks/README.md) and capture
-genuine screenshots before running its separate publishing test:
+`jamstacks/` is removable gallery-only source metadata (`config.json`, `home-light.jpg`,
+`home-dark.jpg`, `screenshots.json`, `config.test.mjs`). Customer builds, tests and GitHub Pages do
+not read it. After a fresh normal build, run:
 
 ```sh
-node /home/mythz/src/mythz/jamstacks.net/tools/template-screenshots/capture.mjs \
-  --template /path/to/next-type-style --modes light,dark --executable /usr/bin/chromium
 node --test jamstacks/config.test.mjs
 ```
 
-Before publication: replace neutral content and shell; validate industry data/schema and all links;
-choose licensed fonts; verify both themes/base-path/embed states; create a neutral 1200×630 public/og.png
-from the finished design and wire metadata; replace the icon; generate gallery captures and validate;
-confirm domain/Pages settings and HTTPS; remove `plan/` and `.claude/skills/` after review. The website must not import or
-link the planning folder. No stock screenshot or OG image is supplied as if it were final.
+Remove `plan/` and `.claude/skills/` after reviewing the finished template before publication.

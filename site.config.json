@@ -1,7 +1,8 @@
 {
-  "name": "Jamstacks starter",
-  "description": "A neutral Next.js foundation for Jamstacks websites.",
-  "domain": "",
+  "name": "Atelier Blush Hair Studio",
+  "description": "Atelier Blush is an editorial hair studio in Seven Dials, London: precision cuts, lived-in colour and occasion styling, priced clearly by stylist level.",
+  "domain": "next-salon-studio.jamstacks.net",
+  "timeZone": "Europe/London",
   "jamstacks": {
     "siteId": "",
     "cdnUrl": "https://cdn.jamstacks.net"
